@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For You 🌸</title>
+    <!-- Mengambil font imut dari Google Fonts -->
+    <link href="https://fonts.googleapis.com" rel="stylesheet">
+    <style>
+        :root {
+            --primary-pink: #ffafbd;
+            --secondary-pink: #ffc3a0;
+            --glass: rgba(255, 255, 255, 0.7);
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, var(--primary-pink), var(--secondary-pink));
+            font-family: 'Quicksand', sans-serif;
+            overflow: hidden;
+        }
+
+        /* Efek Hati Melayang di Background */
+        .bg-hearts {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Kontainer Utama (Efek Kaca) */
+        .container {
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            padding: 40px 20px;
+            border-radius: 30px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 85%;
+            max-width: 400px;
+            z-index: 1;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .profile-img {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            border: 5px solid white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            object-fit: cover;
+        }
+
+        h1 {
+            font-family: 'Pacifico', cursive;
+            color: #d81b60;
+            font-size: 28px;
+            margin: 10px 0;
+        }
+
+        p {
+            color: #6a6a6a;
+            font-size: 15px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            position: relative;
+        }
+
+        button {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Quicksand', sans-serif;
+        }
+
+        #yesBtn {
+            background: #ff4d79;
+            color: white;
+            box-shadow: 0 5px 15px rgba(255, 77, 121, 0.4);
+        }
+
+        #noBtn {
+            background: #fff;
+            color: #ff4d79;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        /* Pesan Sukses */
+        #success-msg {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            z-index: 100;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-hearts" id="hearts"></div>
+
+    <div class="container" id="mainCard">
+        <!-- Ganti link gambar ini dengan link fotomu atau simpan foto dengan nama foto.jpg -->
+        <img src="img/carlos.jpg" alt="Cute Avatar" class="profile-img">
+        <h1>Maafin Aku? ✨</h1>
+        <p>Aku Minta Maaf Ya Sayang Atas Segala Hal Yang Telah Aku Ucapkan Semalam, Gak Seharusnya Aku Begitu Ke Kamu. Aku Akan Lebih Belajar Mengontrol Diri Aku Lagi Lain Kali. Aku Minta Maaf Ya Sayang! 🥺❤️</p>
+        
+        <div class="btn-group">
+            <button id="yesBtn" onclick="showLove()">Iya, Maafin</button>
+            <button id="noBtn" onmouseover="runAway()" onclick="runAway()">Gak!</button>
+        </div>
+    </div>
+
+    <div id="success-msg">
+        <h1 style="font-size: 50px;">💖</h1>
+        <h2>Yeeay! Makasih!</h2>
+        <p>I Love You So Much Sayang! 🥰✨</p>
+        <button onclick="location.reload()" style="background: #eee; color: #333;">Tutup</button>
+    </div>
+
+    <!-- Musik Latar (Ganti src ke file musikmu) -->
+    <audio id="lagu" loop>
+        <source src="musik.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        // Animasi Hati Berjatuhan
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = Math.random() * 2 + 3 + 's';
+            heart.style.position = 'fixed';
+            heart.style.top = '-20px';
+            heart.style.fontSize = Math.random() * 20 + 10 + 'px';
+            heart.style.opacity = Math.random();
+            document.getElementById('hearts').appendChild(heart);
+
+            heart.animate([
+                { transform: 'translateY(0) rotate(0deg)' },
+                { transform: `translateY(100vh) rotate(${Math.random() * 360}deg)` }
+            ], {
+                duration: 3000,
+                iterations: 1
+            });
+
+            setTimeout(() => { heart.remove(); }, 3000);
+        }
+        setInterval(createHeart, 300);
+
+        // Fungsi Tombol Berlari (Khusus HP & PC)
+        function runAway() {
+            const btn = document.getElementById('noBtn');
+            const container = document.body;
+            
+            // Batas agar tombol tidak keluar layar
+            const maxX = window.innerWidth - btn.offsetWidth;
+            const maxY = window.innerHeight - btn.offsetHeight;
+
+            const randomX = Math.floor(Math.random() * maxX);
+            const randomY = Math.floor(Math.random() * maxY);
+
+            btn.style.position = 'fixed';
+            btn.style.left = randomX + 'px';
+            btn.style.top = randomY + 'px';
+        }
+
+        function showLove() {
+            document.getElementById('mainCard').style.display = 'none';
+            document.getElementById('success-msg').style.display = 'block';
+            document.getElementById('lagu').play();
+        }
+
+        // Aktifkan musik saat pertama kali klik layar
+        window.addEventListener('click', () => {
+            const audio = document.getElementById('lagu');
+            // audio.play(); // Hapus comment ini jika ingin musik langsung nyala
+        }, {once: true});
+    </script>
+</body>
+</html>
